@@ -1,59 +1,54 @@
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.*;
+import DAO.LivroDAO;
+import model.GestorEmprestimos;
+import model.Livro;
 
 public class Biblioteca {
-    private List<Livro> livros;
-
-    public Biblioteca() {
-
-        this.livros = new ArrayList<>();
-    }
-
-    public void cadastrarLivro(String titulo, String autor) {
-        Livro novoLivro = new Livro(titulo, autor);
-        livros.add(novoLivro);
-        System.out.println("Livro \"" + titulo + "\" Cadastrado com Sucesso. ");
-    }
-
-    public void listarLivrosDisponiveis() {
-        System.out.println("Livros disponíveis na biblioteca: ");
-        for (Livro livro : livros) {
-            if (livro.estaDisponivel()) {
-                System.out.println(" - Título: " + livro.getTitulo() + " | Autor: " + livro.getAutor());
-            }
-        }
-    }
-
     public static void main(String[] args) {
-        Biblioteca biblioteca = new Biblioteca();
+        GestorEmprestimos ge = new GestorEmprestimos();
+        LivroDAO livroDAO = new LivroDAO();
+
         Scanner sc = new Scanner(System.in);
+        int opcao;
 
+        do {
+            System.out.println("\nEscolha uma opção:");
+            System.out.println("1. Cadastrar livro");
+            System.out.println("2. Listar livros disponíveis");
+            System.out.println("3. Sair");
+            System.out.print("Opção: ");
+            opcao = sc.nextInt();
+            sc.nextLine(); 
 
-        while (true) {
-            System.out.println("\nDigite o título do Livro (ou 'Sair' para encerrar)");
-            String titulo = sc.nextLine();
-
-            if (titulo.equalsIgnoreCase("sair")) {
-                break;
+            switch (opcao) {
+                case 1:
+                    cadastrarLivro(sc, ge, livroDAO);
+                    break;
+                case 2:
+                    ge.listarLivrosDisponiveis();
+                    break;
+                case 3:
+                    System.out.println("Encerrando o programa...");
+                    break;
+                default:
+                    System.out.println("Opção inválida!");
+                    break;
             }
-
-            System.out.println("Digite o nome do Autor: do livro");
-            String autor = sc.nextLine();
-
-
-            biblioteca.cadastrarLivro(titulo, autor);
-        }
-
-
-        biblioteca.listarLivrosDisponiveis();
+        } while (opcao != 3);
 
         sc.close();
+    }
 
+    private static void cadastrarLivro(Scanner sc, GestorEmprestimos ge, LivroDAO livroDAO) {
+        System.out.println("Digite o título do livro:");
+        String titulo = sc.nextLine();
+
+        System.out.println("Digite o nome do autor do livro:");
+        String autor = sc.nextLine();
+
+        Livro novoLivro = new Livro(titulo, autor);
+        ge.cadastrarLivro(titulo, autor);
+        livroDAO.adicionarItem(novoLivro);
+        System.out.println("Livro \"" + titulo + "\" cadastrado com sucesso.");
     }
 }
-

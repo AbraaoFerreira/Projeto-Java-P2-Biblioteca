@@ -1,7 +1,9 @@
+package model;
+
 import Interface.ItemEmprestavel;
 
 public class Livro extends ItemBiblioteca implements ItemEmprestavel {
-    private static  int proximoCodigo = 1;
+    private static int proximoCodigo = 1;
     private String autor;
     private boolean emprestado;
 
@@ -29,12 +31,11 @@ public class Livro extends ItemBiblioteca implements ItemEmprestavel {
     public void devolver() {
         if (emprestado) {
             emprestado = false;
-            System.out.println("Livro \"" + getTitulo() + "\" devolvido. ");
+            System.out.println("Livro \"" + getTitulo() + "\" devolvido.");
         } else {
-            System.out.println("Livro \"" + getTitulo() + "\" não está emprestado. ");
+            System.out.println("Livro \"" + getTitulo() + "\" não está emprestado.");
         }
     }
-
 
     @Override
     public boolean estaDisponivel() {
@@ -49,4 +50,3 @@ public class Livro extends ItemBiblioteca implements ItemEmprestavel {
         this.autor = autor;
     }
 }
-

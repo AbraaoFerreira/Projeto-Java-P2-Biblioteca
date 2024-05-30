@@ -1,8 +1,8 @@
-CREATE DATABASE projetobiblioteca;
+CREATE DATABASE projetoBiblioteca;
 
-USE projetobiblioteca;
+USE projetoBiblioteca;
 
-CREATE TABLE Livro (
+CREATE TABLE IF NOT EXISTS Livro (
     id INT AUTO_INCREMENT PRIMARY KEY,
     titulo VARCHAR(255) NOT NULL,
     autor VARCHAR(255) NOT NULL,
@@ -10,5 +10,4 @@ CREATE TABLE Livro (
     emprestado TINYINT(1) NOT NULL
 );
 
-
-
+SELECT * FROM Livro;

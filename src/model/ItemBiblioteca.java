@@ -1,3 +1,5 @@
+package model;
+
 public abstract class ItemBiblioteca {
     private String titulo;
     private String codigo;
@@ -23,5 +25,3 @@ public abstract class ItemBiblioteca {
         this.codigo = codigo;
     }
 }
-
-
